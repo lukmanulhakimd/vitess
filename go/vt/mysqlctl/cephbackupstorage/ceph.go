@@ -45,10 +45,11 @@ var (
 )
 
 var storageConfig struct {
-	AccessKey string `json:"accessKey"`
-	SecretKey string `json:"secretKey"`
-	EndPoint  string `json:"endPoint"`
-	UseSSL    bool   `json:"useSSL"`
+	AccessKey  string `json:"accessKey"`
+	SecretKey  string `json:"secretKey"`
+  BucketName string `json:"bucketName"`
+	EndPoint   string `json:"endPoint"`
+	UseSSL     bool   `json:"useSSL"`
 }
 
 // CephBackupHandle implements BackupHandle for Ceph Cloud Storage.
@@ -294,8 +295,6 @@ func objName(parts ...string) string {
 // keeping in view the bucket naming conventions for ceph
 // only keyspace informations is extracted and used for bucket name
 func alterBucketName(dir string) string {
-	bucket := strings.ToLower(dir)
-	bucket = strings.Split(bucket, "/")[0]
-	bucket = strings.Replace(bucket, "_", "-", -1)
+  bucket := storageConfig.BucketName
 	return bucket
 }
